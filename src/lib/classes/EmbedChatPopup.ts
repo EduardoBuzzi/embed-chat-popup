@@ -58,7 +58,7 @@ export class EmbedChatPopup {
         }
 
         if(this.options.message) {
-            this.addMessage('', 1500, 0)
+            this.addMessage('', 1500, 5000)
         }
     }
 

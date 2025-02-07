@@ -41,7 +41,7 @@ class EmbedChatPopup {
       this.elements.root.dataset.position = this.options.position;
     }
     if (this.options.message) {
-      this.addMessage("", 1500, 0);
+      this.addMessage("", 1500, 5e3);
     }
   }
   toggle() {
