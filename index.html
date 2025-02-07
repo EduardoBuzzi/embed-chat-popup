@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Embed Chat Popup</title>
+    <script type="module" src="/src/page/page.ts"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div style="text-align: center; margin: auto; width: 100%; display: block;">
+        <img draggable="false" width="64" height="64" src="/logo.svg" class="logo" alt="Logo" />
+      </div>
+
+      <h1 class="title">Embed Chat Popup</h1>
+    </div>
+    
+    <script defer type="module" src="/src/index.ts"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const chat = new EmbedChatPopup(
+          '/chatbot.html', 
+          {
+            position: 'right',
+            styles: {
+              iconColor: 'black',
+              iconOpacity: .7,
+              background: 'linear-gradient(#08d78b, #047f52)',
+              backgroundColor: '#08d78b',
+            },
+            // backdrop: false,
+            // backdrop: 'rgb(12, 77, 48, .1)',
+          }
+        );
+
+        chat.open();
+      })
+    </script>
+  </body>
+</html>

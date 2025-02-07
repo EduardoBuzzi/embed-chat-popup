@@ -1,0 +1,169 @@
+.ecp__backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--ecp__backdrop, rgba(0, 0, 0, 0.5));
+    z-index: 999;
+    display: none;
+}
+.ecp__backdrop.ecp__backdrop-show{
+    display: block;
+}
+.ecp__floating-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--ecp__background, var(--ecp__background-color, linear-gradient(#08eb98, #037e51)));
+    color: var(--ecp__icon-color, white);
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: transform 0.3s;
+    border: 0;
+}
+.ecp__root[data-position=left] .ecp__floating-button {
+    right: auto;
+    left: 20px;
+}
+.ecp__floating-button:focus-visible {
+    outline-offset: 3px;
+    outline-color: var(--ecp__background-color, #00d084) !important;
+    outline: 2px solid;
+}
+.ecp__floating-button:hover {
+    transform: scale(1.1);
+}
+.ecp__floating-button:active {
+    transform: scale(.9);
+}
+.ecp__floating-button svg{
+    opacity: var(--ecp__icon-opacity, 1);
+}
+.ecp__floating-button:hover .ecp__floating-button-chat-icon{
+    -webkit-animation: swing 1s ease;
+    animation: swing 1s ease;
+    -webkit-transform-origin: top center;
+    transform-origin: top center;
+}
+/* .ecp__floating-button:not(.ecp__floating-button-open) .ecp__floating-button-close-icon,
+.ecp__floating-button.ecp__floating-button-open .ecp__floating-button-chat-icon {
+    display: none;
+} */
+.ecp__floating-button-close-icon {
+    display: none;
+    scale: .5;
+    transition: scale .3s;
+}
+.ecp__floating-button-open .ecp__floating-button-close-icon{
+    display: block;
+    scale: 1;
+    @starting-style {
+        scale: .2;
+    }
+}
+.ecp__floating-button-chat-icon{
+    display: block;
+    scale: 1;
+    transition: scale .3s;
+    @starting-style {
+        scale: .2;
+    }
+}
+.ecp__floating-button-open .ecp__floating-button-chat-icon{
+    display: none;
+    scale: .8;
+}
+
+.ecp__container {
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    width: min(350px, 90%);
+    height: min(550px, 68%);
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    display: none;
+    flex-direction: column;
+    z-index: 1000;
+    transition: opacity 0.1s ease, scale 0.1s ease, transform 0.3s ease, display .3s ease allow-discrete;
+    opacity: 0;
+    transform: translateY(20px);
+    scale: .9;
+}
+.ecp__root[data-position=left] .ecp__container {
+    right: auto;
+    left: 20px;
+}
+.ecp__container-open {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+    scale: 1;
+
+    @starting-style {
+        opacity: 0;
+        scale: .9;
+        transform: translateY(20px);
+    }
+}
+.ecp__iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 10px;
+}
+.ecp__close-button {
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0px;
+    color: rgb(92, 92, 92);
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: white;
+    border: 0;
+    height: 27px;
+    border-radius: 10px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+}
+.ecp__close-button:hover{
+    background: rgb(236, 236, 236);
+}
+.ecp__close-button:active {
+    transform: scale(.8);
+}
+.ecp__close-button svg{
+    width: 27px;
+    height: 27px;
+}
+@keyframes swing {
+    20% {
+        -webkit-transform: rotate(10deg);
+        transform: rotate(10deg)
+    }
+    40% {
+        -webkit-transform: rotate(-10deg);
+        transform: rotate(-10deg)
+    }
+    60% {
+        -webkit-transform: rotate(5deg);
+        transform: rotate(5deg)
+    }
+    80% {
+        -webkit-transform: rotate(-5deg);
+        transform: rotate(-5deg)
+    }
+    to {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg)
+    }
+}

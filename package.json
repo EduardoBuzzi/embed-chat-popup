@@ -1,0 +1,21 @@
+{
+  "name": "embed-chat-popup",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "terser": "^5.31.1",
+    "typescript": "^5.5.3",
+    "vite": "^6.1.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/embed-chat-popup.umd.js",
+  "module": "./dist/embed-chat-popup.es.js"
+}
