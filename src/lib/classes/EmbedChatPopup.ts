@@ -117,6 +117,7 @@ export class EmbedChatPopup {
 
                 this.removeMessage(this.elements!.messagesContainer.firstElementChild as Element)
             }
+            if(this.isChatOpen) return;
             this.elements!.messagesContainer.appendChild(messageElement)
             if(delayLeave > 0) {
                 setTimeout(() => {
