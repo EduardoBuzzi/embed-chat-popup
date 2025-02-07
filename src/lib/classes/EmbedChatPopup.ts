@@ -15,6 +15,7 @@ export class EmbedChatPopup {
     private elements?: {
         root: HTMLElement,
         backdrop: HTMLElement,
+        messagesContainer: HTMLElement,
         container: HTMLElement, 
         floatingButton: HTMLElement, 
         closeButton: HTMLElement,
@@ -48,8 +49,16 @@ export class EmbedChatPopup {
             this.setBackdrop()
         }
 
+        if(this.options.avatar) {
+            this.setAvatar()
+        }
+
         if(this.options.position){
             this.elements.root.dataset.position = this.options.position
+        }
+
+        if(this.options.message) {
+            this.addMessage('', 1500, 0)
         }
     }
 
@@ -61,6 +70,7 @@ export class EmbedChatPopup {
         if(!this.elements!.iframe.src) {
             this.elements!.iframe.src = this.chatUrl
         }
+        this.clearMessages()
         this.elements!.floatingButton.classList.add('ecp__floating-button-open')
         this.elements!.container.classList.add('ecp__container-open')
         this.elements!.backdrop.classList.add('ecp__backdrop-show')
@@ -74,6 +84,60 @@ export class EmbedChatPopup {
         this.elements!.backdrop.classList.remove('ecp__backdrop-show')
         document.removeEventListener('keydown', this.boundHandleEscape)
         this.isChatOpen = false
+    }
+
+    public setAvatar(url: string = '') {
+        if(!url && !this.options.avatar) return
+
+        const avatarUrl = (url || this.options.avatar.img) as string
+        const img = new Image()
+        img.onload = () => {
+            let avatarElement = this.elements?.floatingButton?.querySelector('.ecp__floating-button-avatar img')
+            if(avatarElement && avatarUrl) {
+                (avatarElement as HTMLImageElement).src = avatarUrl
+            }
+            this.elements?.floatingButton.classList.add('ecp__floating-button-avatar-enabled')
+            if(this.options.avatar.online){
+                this.elements?.floatingButton.classList.add('ecp__floating-button-avatar-online')
+                this.elements!.floatingButton.style.setProperty('--border-color', getComputedStyle(document.documentElement).backgroundColor)
+            }
+        }
+        img.src = avatarUrl
+    }
+
+    public addMessage(message: string = '', delayEnter: number = 200, delayLeave: number = 5000) {
+        message = message || this.options.message
+        if(!message) return
+        const messageElement = document.createElement('div')
+        messageElement.className = 'ecp__message'
+        messageElement.textContent = message
+
+        setTimeout(() => {
+            if (this.elements!.messagesContainer.childElementCount >= 2) {
+
+                this.removeMessage(this.elements!.messagesContainer.firstElementChild as Element)
+            }
+            this.elements!.messagesContainer.appendChild(messageElement)
+            if(delayLeave > 0) {
+                setTimeout(() => {
+                    this.removeMessage(messageElement)
+                }, delayLeave);
+            }
+        }, delayEnter);
+    }
+
+    public removeMessage(messageElement: Element) {
+        if (this.elements && this.elements.messagesContainer.contains(messageElement) && messageElement.classList) {
+            messageElement.classList.add('ecp__message-out')
+            setTimeout(() => {
+                messageElement.remove();
+            }, 300);
+        }
+    }
+
+    public clearMessages() {
+        const messages = Array.from(this.elements!.messagesContainer.children);
+        messages.forEach(message => this.removeMessage(message));
     }
 
     private setupHost() {
@@ -102,6 +166,7 @@ export class EmbedChatPopup {
             root: this.shadowRoot!.querySelector('.ecp__root') as HTMLElement,
             backdrop: this.shadowRoot!.querySelector('.ecp__backdrop') as HTMLElement,
             container: this.shadowRoot!.querySelector('.ecp__container') as HTMLElement,
+            messagesContainer: this.shadowRoot!.querySelector('.ecp__messages') as HTMLElement,
             floatingButton: this.shadowRoot!.querySelector('.ecp__floating-button') as HTMLElement,
             closeButton: this.shadowRoot!.querySelector('.ecp__close-button') as HTMLElement,
             iframe: this.shadowRoot!.querySelector('.ecp__iframe') as HTMLIFrameElement

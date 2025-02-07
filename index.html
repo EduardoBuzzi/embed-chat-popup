@@ -20,22 +20,31 @@
 
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        const chat = new EmbedChatPopup(
+        window.chat = new EmbedChatPopup(
           '/chatbot.html', 
           {
-            position: 'right',
+            // position: 'left',
             styles: {
               iconColor: 'black',
               iconOpacity: .7,
               background: 'linear-gradient(#08d78b, #047f52)',
               backgroundColor: '#08d78b',
+              // messageColor: 'white',
+              // messageBg: 'black',
             },
-            // backdrop: false,
+            backdrop: false,
             // backdrop: 'rgb(12, 77, 48, .1)',
+            avatar: {
+              img: 'bot.png',
+              online: true
+            },
+            message: 'Hello!'
           }
         );
 
-        chat.open();
+        chat.addMessage('How can I help you today?', 3000, 0)
+
+        // chat.open();
       })
     </script>
   </body>
